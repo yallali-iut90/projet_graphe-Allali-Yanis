@@ -1,0 +1,14 @@
+ épidémie dans un réseau.
+
+Le réseau est représenté par un graphe :
+
+Les sommets représentent des personnes.
+
+Les arêtes représentent les contacts entre les personnes.
+
+Le graphe est non orienté, car un contact fonctionne dans les deux sens.
+
+Les arêtes sont pondérées : le poids représente la probabilité de transmission de la maladie entre deux personnes (contact fort ou faible).
+
+Au départ, certains sommets sont infectés.
+À chaque étape de la simulation, une personne infectée peut transmettre la maladie à ses voisins, en fonction du poids de l’arête qui les relie. Cela correspond à un parcours du graphe, où l’infection se propage de sommet en sommet.
