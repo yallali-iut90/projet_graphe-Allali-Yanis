@@ -2,23 +2,15 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import random
 
-# =========================
-# 1️⃣ Création du graphe
-# =========================
+
 
 G = nx.Graph()  # graphe non orienté
 
-# =========================
-# 2️⃣ Ajout des sommets
-# =========================
 
 personnes = ["A", "B", "C", "D", "E"]
 G.add_nodes_from(personnes)
 
-# =========================
-# 3️⃣ Ajout des arêtes (contacts) avec poids
-# poids = probabilité de transmission
-# =========================
+
 
 G.add_edge("A", "B", weight=0.6)
 G.add_edge("A", "C", weight=0.4)
@@ -26,17 +18,12 @@ G.add_edge("B", "D", weight=0.5)
 G.add_edge("C", "D", weight=0.3)
 G.add_edge("D", "E", weight=0.7)
 
-# =========================
-# 4️⃣ État des personnes
-# S = sain, I = infecté
-# =========================
+
 
 etat = {p: "S" for p in G.nodes()}
-etat["A"] = "I"  # patient zéro
+etat["A"] = "I"  
 
-# =========================
-# 5️⃣ Fonction de propagation
-# =========================
+
 
 def propagation(G, etat):
     nouvel_etat = etat.copy()
@@ -51,9 +38,7 @@ def propagation(G, etat):
 
     return nouvel_etat
 
-# =========================
-# 6️⃣ Affichage du graphe
-# =========================
+
 
 def afficher_graphe(G, etat, etape):
     couleurs = []
@@ -70,9 +55,7 @@ def afficher_graphe(G, etat, etape):
     plt.title(f"Étape {etape}")
     plt.show()
 
-# =========================
-# 7️⃣ Simulation
-# =========================
+
 
 nb_etapes = 5
 
