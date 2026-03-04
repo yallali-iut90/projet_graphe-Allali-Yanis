@@ -12,10 +12,9 @@ Les nœuds bougent à chaque étape pour simuler le mouvement des personnes dans
 
 ## États possibles
 
- Couleur  État | Signification 
-Vert  S Sain | Pas encore infecté 
-Rouge  I Infecté | Actuellement malade, peut transmettre 
-Bleu  R Guéri | A été malade, immunisé 
+Vert (S) – Sain : n’a pas été infecté.
+Rouge (I) – Infecté : est malade et peut transmettre la maladie.
+Bleu (R) – Guéri : a été malade et est maintenant immunisé.
 
 ## Ce que j'ai utilisé du cours
 
