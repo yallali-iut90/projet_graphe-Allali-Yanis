@@ -3,63 +3,83 @@ import matplotlib.pyplot as plt
 import random
 
 
+NB_PERSONNES = 16
+NB_ETAPES = 10
+PROBA_CONNEXION = 0.2      
+PROBA_GUERISON = 0.25       
+PROBA_REINFECTION = 0.05   
 
-G = nx.Graph()  # graphe non orienté
-
-
-personnes = ["A", "B", "C", "D", "E"]
+#  graphe
+G = nx.Graph()
+personnes = [chr(i) for i in range(65, 65 + NB_PERSONNES)]
 G.add_nodes_from(personnes)
 
+for i in range(len(personnes)):
+    for j in range(i + 1, len(personnes)):
+        if random.random() < PROBA_CONNEXION:
+            G.add_edge(personnes[i], personnes[j], weight=round(random.uniform(0.1, 0.8), 2))
 
-
-G.add_edge("A", "B", weight=0.6)
-G.add_edge("A", "C", weight=0.4)
-G.add_edge("B", "D", weight=0.5)
-G.add_edge("C", "D", weight=0.3)
-G.add_edge("D", "E", weight=0.7)
-
-
-
+# etats de basse 
 etat = {p: "S" for p in G.nodes()}
-etat["A"] = "I"  
+etat[random.choice(personnes)] = "I"
 
-
-
+# propa
 def propagation(G, etat):
     nouvel_etat = etat.copy()
-
     for personne in G.nodes():
         if etat[personne] == "I":
             for voisin in G.neighbors(personne):
                 if etat[voisin] == "S":
-                    proba = G[personne][voisin]["weight"]
-                    if random.random() < proba:
+                    if random.random() < G[personne][voisin]["weight"]:
                         nouvel_etat[voisin] = "I"
-
+            if random.random() < PROBA_GUERISON:
+                nouvel_etat[personne] = "R"
+        elif etat[personne] == "R":
+ 
+            if random.random() < PROBA_REINFECTION:
+                nouvel_etat[personne] = "I"
     return nouvel_etat
 
-
-
+# Affichage 
 def afficher_graphe(G, etat, etape):
     couleurs = []
+    tailles = []
     for p in G.nodes():
         if etat[p] == "I":
             couleurs.append("red")
+            tailles.append(1000)   
+        elif etat[p] == "R":
+            couleurs.append("steelblue")
+            tailles.append(700)
         else:
-            couleurs.append("green")
+            couleurs.append("limegreen")
+            tailles.append(700)
 
-    pos = nx.spring_layout(G)
-    nx.draw(G, pos, with_labels=True, node_color=couleurs, node_size=1200)
-    labels = nx.get_edge_attributes(G, "weight")
-    nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
-    plt.title(f"Étape {etape}")
+    nb_sains    = sum(1 for e in etat.values() if e == "S")
+    nb_infectes = sum(1 for e in etat.values() if e == "I")
+    nb_gueris   = sum(1 for e in etat.values() if e == "R")
+
+    pos = nx.spring_layout(G, k=1.5, seed=etape)
+    plt.figure(figsize=(10, 7))
+    plt.title(
+        f"Jour {etape + 1}  —  Sains: {nb_sains}   Infectés: {nb_infectes}   Guéris: {nb_gueris}",
+        fontsize=13, fontweight='bold'
+    )
+
+    nx.draw(G, pos, with_labels=True, node_color=couleurs, node_size=tailles,
+            font_size=10, font_weight='bold', edge_color='gray', width=1.2)
+
+    plt.tight_layout()
     plt.show()
 
-
-
-nb_etapes = 5
-
-for t in range(nb_etapes):
-    print(f"jour {t} :", etat)
+# simu 
+for t in range(NB_ETAPES):
+    nb_i = sum(1 for e in etat.values() if e == "I")
+    print(f"Jour {t+1} : {nb_i} infecté")
     afficher_graphe(G, etat, t)
     etat = propagation(G, etat)
+
+    # si plus de infecte 
+    if nb_i == 0:
+        print("L'épidémie est terminée !")
+        break
