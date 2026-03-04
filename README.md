@@ -1,55 +1,34 @@
-Explication de mon projet
 
-Mon projet consiste à simuler la propagation d’une épidémie en utilisant la théorie des graphes.
+Description du projet
 
-Je représente un groupe de personnes sous forme de graphe :
+Ce projet simule la propagation d'une épidémie dans une population de 16 personnes , modélisée sous forme de graphe non orienté pondéré.
+Chaque personne est un nœud, et chaque connexion entre deux personnes est une arête dont le poids représente la probabilité de transmission de la maladie entre elles.
 
-Chaque sommet représente une personne.
+La simulation est sur plusieurs jours. À chaque jour :
+les personnes infectées peuvent contaminer leurs voisins 
+les personnes infectées ont une chance de guérir
+les personnes guéries ont une petite chance de retomber malades
+Les nœuds bougent à chaque étape pour simuler le mouvement des personnes dans la population.
 
-Chaque arête représente un contact entre deux personnes.
+## États possibles
 
-J’utilise un graphe non orienté, car si une personne est en contact avec une autre, la relation fonctionne dans les deux sens.
+ Couleur  État | Signification 
+Vert  S Sain | Pas encore infecté 
+Rouge  I Infecté | Actuellement malade, peut transmettre 
+Bleu  R Guéri | A été malade, immunisé 
 
-Les arêtes sont pondérées : le poids représente la probabilité que la maladie se transmette entre deux personnes.
+## Ce que j'ai utilisé du cours
 
-Au début, je choisis une personne infectée (le patient zéro).
-Ensuite, à chaque étape, une personne infectée peut contaminer ses voisins selon la probabilité indiquée par le poids de l’arête.
+### Graphes (networkx)
 
-Le programme permet de visualiser comment l’épidémie se propage dans le réseau.
+- **Graphe non orienté simple** (`nx.Graph()`) .
+- **Voisins d'un nœud** : `G.neighbors(personne)` utilisé dans la propagation pour parcourir les contacts directs d'une personne infectée .
+- **Coloration des nœuds** : `node_color` dans `nx.draw()`.
+- **Layout spring** : `nx.spring_layout(G, k=1.5, seed=etape)` . Le paramètre `seed` change à chaque jour pour simuler le mouvement des personnes.
+- **Paramétrage de l'affichage** : `node_size`, `edge_color`, `font_weight` .
 
-Ce que j’ai utilisé du cours
- 
- La définition d’un graphe:
+### Python général
 
-J’utilise la définition vue en cours :
-un graphe est composé de sommets et d’arêtes.
-
-Graphe non orienté:
-
-Dans le diapo, on a vu qu’un graphe peut être orienté ou non orienté.
-J’ai choisi un graphe non orienté car les contacts sont réciproques.
-
- Graphe pondéré:
-
-J’utilise un graphe pondéré.
-Le poids des arêtes représente la probabilité de transmission de la maladie.
-C’est une application directe de la notion de graphe pondéré vue en cours.
-
- Voisins d’un sommet:
-
-En cours, on a vu que les voisins d’un sommet sont les sommets reliés par une arête.
-Dans mon projet, une personne peut contaminer uniquement ses voisins.
-J’utilise donc directement cette notion.
-
- Connexité:
-
-On a vu qu’un graphe est connexe si on peut aller de n’importe quel sommet à n’importe quel autre.
-Dans mon projet :
-si le graphe est connexe, l’épidémie peut toucher tout le monde.
-sinon, elle reste limitée à une partie du réseau.
-
-Parcours de graphe:
-
-La propagation fonctionne comme un parcours du graphe :
-je pars d’un sommet infecté, puis je regarde ses voisins, puis les voisins des voisins.
-C’est comme le  parcours en largeur vu en cours.
+- **Compréhension de liste** : utilisée pour compter les sains/infectés/guéris .
+- **f-strings** : pour afficher le titre du graphe et les messages dans le terminal.
+- **Dictionnaire** : `etat` est un dictionnaire `{personne: état}`.
