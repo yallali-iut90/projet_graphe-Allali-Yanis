@@ -1,51 +1,51 @@
- Simulation d'Épidémie sur Graphe Dynamique
+DESCRIPTION DU PROJET
 
-Ce projet simule la propagation d'une maladie au sein d'une population modélisée par un graphe non orienté pondéré. L'objectif est de visualiser comment les interactions sociales et la mobilité influencent la diffusion d'un virus.
-Description du projet
+Ce projet simule la propagation d'une épidémie au sein d'une population de 16 personnes, modélisée par un graphe non orienté pondéré. L'objectif est de visualiser l'impact des interactions sociales et de la mobilité sur la diffusion d'un virus.
 
-La simulation repose sur une population de 16 personnes. Chaque individu est un nœud, et chaque connexion sociale est une arête dont le poids représente la probabilité de transmission (de 0.1 à 0.9).
-Fonctionnement de la simulation
+La simulation repose sur une population où chaque individu est un nœud et chaque connexion sociale est une arête. Le poids de chaque arête représente la probabilité de transmission (de 0.1 à 0.9).
+FONCTIONNEMENT DE LA SIMULATION
 
 La simulation se déroule sur 10 jours. À chaque étape :
 
-    Contamination : Les infectés peuvent transmettre le virus à leurs voisins selon le poids de l'arête.
+    Contamination : les infectés peuvent transmettre le virus à leurs voisins selon le poids de l'arête.
 
-    Guérison : Les malades ont une chance de guérir (état immunisé).
+    Guérison : les malades ont une chance de guérir et de devenir immunisés.
 
-    Réinfection : Une petite probabilité permet aux guéris de retomber malades.
+    Réinfection : une petite probabilité permet aux guéris de redevenir infectieux.
 
-    Mouvement : Les positions des nœuds sont recalculées à chaque pas de temps pour simuler les déplacements réels.
+    Mouvement : les positions des nœuds sont recalculées pour simuler des déplacements
 
-    Confinement : Le sommet "L" est volontairement isolé (degré 0) pour tester l'efficacité d'une coupure totale de liens sociaux.
+    Confinement : le sommet L est volontairement isolé (degré 0) pour tester l'efficacité d'une coupure totale de liens sociaux.
 
-Code couleur des états
-État	Couleur	Description
-Sain	🟢 Vert	Individu n'ayant pas encore contracté le virus.
-Infecté	🔴 Rouge	Individu malade, entouré d'un halo de contamination.
-Guéri	🔵 Bleu	Individu immunisé (temporairement ou non).
- Notions du cours appliquées
+ETATS DES INDIVIDUS
 
-Ce projet met en pratique les concepts du cours de C. Guyeux sur les graphes en Python :
-1. Théorie des Graphes (networkx)
+SAIN (VERT) : Individu n'ayant pas encore contracté le virus.
 
-    Graphe Pondéré : Attribution de poids aléatoires sur les arêtes pour modéliser des probabilités de transmission.
+INFECTE (ROUGE) : Individu malade, entouré d'un halo de contamination.
 
-    Mesures de centralité : La taille des nœuds est liée à leur degré (nombre de voisins) pour identifier les individus les plus connectés.
+GUERI (BLEU) : Individu immunisé après avoir contracté la maladie.
 
-    Sommets isolés : Suppression d'arêtes pour créer un nœud de degré 0 (Cas de l'individu "L").
+NOTIONS DU COURS APPLIQUEES
+THEORIE DES GRAPHES (NETWORKX)
 
-    Layouts : Utilisation du spring_layout avec une modification de la seed à chaque étape pour générer du mouvement dynamique.
+    Graphe pondéré : attribution de poids sur les arêtes pour modéliser des probabilités de transmission.
 
-2. Analyse de données (matplotlib)
+    Mesures de centralité : la taille des nœuds est liée à leur degré (nombre de voisins) pour identifier les individus les plus connectés.
 
-    Visualisation interactive : Affichage des probabilités sur les arêtes via draw_networkx_edge_labels.
+    Sommets isolés : suppression d'arêtes pour créer un nœud de degré 0 (cas de l'individu L).
 
-    Bilan Épidémique : Génération d'un graphique final (courbes de survie) pour analyser l'évolution des trois populations (S, I, R) au fil du temps.
+    Layouts : utilisation du spring_layout avec une modification de la seed à chaque étape pour générer du mouvement.
 
-3. Programmation Python
+ANALYSE DE DONNEES (MATPLOTLIB)
 
-    Compréhensions de listes : Optimisation du comptage des états et de la génération des listes de couleurs.
+    Visualisation : affichage des probabilités sur les arêtes via draw_networkx_edge_labels.
 
-    F-strings : Formatage dynamique des titres et des rapports de simulation dans la console.
+    Bilan épidémique : génération d'un graphique final pour analyser l'évolution des trois populations au fil du temps.
 
-    Dictionnaires : Stockage efficace des états de santé pour chaque sommet.
+PROGRAMMATION PYTHON
+
+    Compréhensions de listes : optimisation du comptage des états et de la génération des listes de couleurs.
+
+    F-strings : formatage dynamique des titres et des rapports de simulation.
+
+    Dictionnaires : stockage des états de santé pour chaque sommet.
