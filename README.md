@@ -1,51 +1,101 @@
+ SIMULATION DE PROPAGATION D'UNE ÉPIDÉMIE
 DESCRIPTION DU PROJET
 
-Ce projet simule la propagation d'une épidémie au sein d'une population de 16 personnes, modélisée par un graphe non orienté pondéré. L'objectif est de visualiser l'impact des interactions sociales et de la mobilité sur la diffusion d'un virus.
+Ce projet simule la propagation d'une épidémie au sein d'une population de 16 personnes, modélisée à l'aide d'un graphe non orienté pondéré.
 
-La simulation repose sur une population où chaque individu est un nœud et chaque connexion sociale est une arête. Le poids de chaque arête représente la probabilité de transmission (de 0.1 à 0.9).
-FONCTIONNEMENT DE LA SIMULATION
+L'objectif est de visualiser l'impact des interactions sociales et de la mobilité sur la diffusion d'un virus.
 
-La simulation se déroule sur 10 jours. À chaque étape :
+Dans cette simulation :
 
-    Contamination : les infectés peuvent transmettre le virus à leurs voisins selon le poids de l'arête.
+Chaque individu est représenté par un nœud.
 
-    Guérison : les malades ont une chance de guérir et de devenir immunisés.
+Chaque interaction sociale est représentée par une arête.
 
-    Réinfection : une petite probabilité permet aux guéris de redevenir infectieux.
+Le poids de l'arête correspond à la probabilité de transmission du virus, comprise entre 0.1 et 0.9.
 
-    Mouvement : les positions des nœuds sont recalculées pour simuler des déplacements
+ FONCTIONNEMENT DE LA SIMULATION
 
-    Confinement : le sommet L est volontairement isolé (degré 0) pour tester l'efficacité d'une coupure totale de liens sociaux.
+La simulation se déroule sur 10 jours.
+À chaque étape, plusieurs mécanismes sont appliqués :
 
-ETATS DES INDIVIDUS
+ Contamination
 
-SAIN (VERT) : Individu n'ayant pas encore contracté le virus.
+Les individus infectés peuvent transmettre le virus à leurs voisins selon le poids de l'arête qui les relie.
 
-INFECTE (ROUGE) : Individu malade, entouré d'un halo de contamination.
+ Guérison
 
-GUERI (BLEU) : Individu immunisé après avoir contracté la maladie.
+Les individus malades ont une probabilité de guérir et deviennent alors immunisés.
 
-NOTIONS DU COURS APPLIQUEES
-THEORIE DES GRAPHES (NETWORKX)
+ Réinfection
 
-    Graphe pondéré : attribution de poids sur les arêtes pour modéliser des probabilités de transmission.
+Les individus guéris peuvent redevenir infectés, mais avec une faible probabilité.
 
-    Mesures de centralité : la taille des nœuds est liée à leur degré (nombre de voisins) pour identifier les individus les plus connectés.
+ Mouvement
 
-    Sommets isolés : suppression d'arêtes pour créer un nœud de degré 0 (cas de l'individu L).
+Les positions des nœuds sont recalculées afin de simuler des déplacements dans le réseau social.
 
-    Layouts : utilisation du spring_layout avec une modification de la seed à chaque étape pour générer du mouvement.
+Confinement
 
-ANALYSE DE DONNEES (MATPLOTLIB)
+Le sommet L est volontairement isolé (degré 0) afin de tester l'efficacité d'une coupure totale des liens sociaux.
 
-    Visualisation : affichage des probabilités sur les arêtes via draw_networkx_edge_labels.
+ ÉTATS DES INDIVIDUS
 
-    Bilan épidémique : génération d'un graphique final pour analyser l'évolution des trois populations au fil du temps.
+Les individus peuvent être dans trois états différents :
 
-PROGRAMMATION PYTHON
+ SAIN (VERT)
+Individu n'ayant pas encore contracté le virus.
 
-    Compréhensions de listes : optimisation du comptage des états et de la génération des listes de couleurs.
+ INFECTÉ (ROUGE)
+Individu malade, entouré d'un halo de contamination.
 
-    F-strings : formatage dynamique des titres et des rapports de simulation.
+GUÉRI (BLEU)
+Individu ayant contracté la maladie et devenu immunisé.
 
-    Dictionnaires : stockage des états de santé pour chaque sommet.
+ NOTIONS DU COURS APPLIQUÉES
+ THÉORIE DES GRAPHES (NETWORKX)
+
+Plusieurs concepts de théorie des graphes sont utilisés :
+
+Graphe pondéré
+Les arêtes possèdent des poids représentant les probabilités de transmission.
+
+Mesures de centralité
+La taille des nœuds dépend de leur degré (nombre de voisins), ce qui permet d'identifier les individus les plus connectés.
+
+Sommets isolés
+Certaines arêtes sont supprimées afin de créer un nœud de degré 0 (cas de l'individu L).
+
+Layouts dynamiques
+Utilisation de spring_layout avec une seed différente à chaque étape pour créer un effet de mouvement dans le réseau.
+
+ANALYSE DE DONNÉES (MATPLOTLIB)
+
+La bibliothèque Matplotlib est utilisée pour l'analyse et la visualisation :
+
+Visualisation du graphe
+Les probabilités de transmission sont affichées sur les arêtes grâce à
+draw_networkx_edge_labels.
+
+Bilan épidémique final
+Un graphique final montre l'évolution du nombre d'individus :
+
+sains
+
+infectés
+
+guéris
+
+au cours des 10 jours de simulation.
+
+ PROGRAMMATION PYTHON
+
+Plusieurs concepts de programmation Python sont utilisés :
+
+Compréhensions de listes
+Pour optimiser le comptage des états et la génération des listes de couleurs.
+
+F-strings
+Pour créer des titres et rapports dynamiques durant la simulation.
+
+Dictionnaires
+Pour stocker l'état de santé de chaque individu dans le graphe.
