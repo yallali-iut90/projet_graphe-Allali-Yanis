@@ -1,101 +1,66 @@
- SIMULATION DE PROPAGATION D'UNE ÉPIDÉMIE
-DESCRIPTION DU PROJET
+# EPIDEMIC PROPAGATION SIMULATION
 
-Ce projet simule la propagation d'une épidémie au sein d'une population de 16 personnes, modélisée à l'aide d'un graphe non orienté pondéré.
+## DESCRIPTION DU PROJET
+
+Ce projet simule la propagation d'une épidémie au sein d'une population de 16 personnes, modélisée par un graphe non orienté pondéré.
 
 L'objectif est de visualiser l'impact des interactions sociales et de la mobilité sur la diffusion d'un virus.
 
-Dans cette simulation :
+La simulation repose sur une population où chaque individu est un nœud et chaque connexion sociale est une arête.  
+Le poids de chaque arête représente la probabilité de transmission (de 0.1 à 0.9).
 
-Chaque individu est représenté par un nœud.
+---
 
-Chaque interaction sociale est représentée par une arête.
+## FONCTIONNEMENT DE LA SIMULATION
 
-Le poids de l'arête correspond à la probabilité de transmission du virus, comprise entre 0.1 et 0.9.
+La simulation se déroule sur 10 jours. À chaque étape :
 
- FONCTIONNEMENT DE LA SIMULATION
+### CONTAMINATION
+Les infectés peuvent transmettre le virus à leurs voisins selon le poids de l'arête.
 
-La simulation se déroule sur 10 jours.
-À chaque étape, plusieurs mécanismes sont appliqués :
+### GUÉRISON
+Les malades ont une chance de guérir et de devenir immunisés.
 
- Contamination
+### RÉINFECTION
+Une petite probabilité permet aux guéris de redevenir infectieux.
 
-Les individus infectés peuvent transmettre le virus à leurs voisins selon le poids de l'arête qui les relie.
+### MOUVEMENT
+Les positions des nœuds sont recalculées pour simuler des déplacements.
 
- Guérison
+### CONFINEMENT
+Le sommet L est volontairement isolé (degré 0) pour tester l'efficacité d'une coupure totale de liens sociaux.
 
-Les individus malades ont une probabilité de guérir et deviennent alors immunisés.
+---
 
- Réinfection
+## ÉTATS DES INDIVIDUS
 
-Les individus guéris peuvent redevenir infectés, mais avec une faible probabilité.
-
- Mouvement
-
-Les positions des nœuds sont recalculées afin de simuler des déplacements dans le réseau social.
-
-Confinement
-
-Le sommet L est volontairement isolé (degré 0) afin de tester l'efficacité d'une coupure totale des liens sociaux.
-
- ÉTATS DES INDIVIDUS
-
-Les individus peuvent être dans trois états différents :
-
- SAIN (VERT)
+### SAIN (VERT)
 Individu n'ayant pas encore contracté le virus.
 
- INFECTÉ (ROUGE)
+### INFECTÉ (ROUGE)
 Individu malade, entouré d'un halo de contamination.
 
-GUÉRI (BLEU)
-Individu ayant contracté la maladie et devenu immunisé.
+### GUÉRI (BLEU)
+Individu immunisé après avoir contracté la maladie.
 
- NOTIONS DU COURS APPLIQUÉES
- THÉORIE DES GRAPHES (NETWORKX)
+---
 
-Plusieurs concepts de théorie des graphes sont utilisés :
+## NOTIONS DU COURS APPLIQUÉES
 
-Graphe pondéré
-Les arêtes possèdent des poids représentant les probabilités de transmission.
+### THÉORIE DES GRAPHES (NETWORKX)
 
-Mesures de centralité
-La taille des nœuds dépend de leur degré (nombre de voisins), ce qui permet d'identifier les individus les plus connectés.
+- Graphe pondéré : attribution de poids sur les arêtes pour modéliser des probabilités de transmission.
+- Mesures de centralité : la taille des nœuds est liée à leur degré (nombre de voisins) pour identifier les individus les plus connectés.
+- Sommets isolés : suppression d'arêtes pour créer un nœud de degré 0 (cas de l'individu L).
+- Layouts : utilisation du `spring_layout` avec une modification de la seed à chaque étape pour générer du mouvement.
 
-Sommets isolés
-Certaines arêtes sont supprimées afin de créer un nœud de degré 0 (cas de l'individu L).
+### ANALYSE DE DONNÉES (MATPLOTLIB)
 
-Layouts dynamiques
-Utilisation de spring_layout avec une seed différente à chaque étape pour créer un effet de mouvement dans le réseau.
+- Visualisation : affichage des probabilités sur les arêtes via `draw_networkx_edge_labels`.
+- Bilan épidémique : génération d'un graphique final pour analyser l'évolution des trois populations au fil du temps.
 
-ANALYSE DE DONNÉES (MATPLOTLIB)
+### PROGRAMMATION PYTHON
 
-La bibliothèque Matplotlib est utilisée pour l'analyse et la visualisation :
-
-Visualisation du graphe
-Les probabilités de transmission sont affichées sur les arêtes grâce à
-draw_networkx_edge_labels.
-
-Bilan épidémique final
-Un graphique final montre l'évolution du nombre d'individus :
-
-sains
-
-infectés
-
-guéris
-
-au cours des 10 jours de simulation.
-
- PROGRAMMATION PYTHON
-
-Plusieurs concepts de programmation Python sont utilisés :
-
-Compréhensions de listes
-Pour optimiser le comptage des états et la génération des listes de couleurs.
-
-F-strings
-Pour créer des titres et rapports dynamiques durant la simulation.
-
-Dictionnaires
-Pour stocker l'état de santé de chaque individu dans le graphe.
+- Compréhensions de listes : optimisation du comptage des états et de la génération des listes de couleurs.
+- F-strings : formatage dynamique des titres et des rapports de simulation.
+- Dictionnaires : stockage des états de santé pour chaque sommet.
